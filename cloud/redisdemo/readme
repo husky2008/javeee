@@ -1,0 +1,68 @@
+1.安装部署
+  redis集群部署的时候需要ruby 所以需要安装ruby环境
+  集群部署的时候需要安装redis.gem
+  安装命令： gem install redis -v 2.0.0  具体版本可以到：https://rubygems.org/gems/redis 去下载
+2.集群配置（redis的集群至少需要6个节点,启动的时候3个master,3个slaver）
+  需要在每个节点的配置中开启集群的配置：
+  cluster-enabled yes    开启集群的配置
+  cluster-config-file nodes-6379.conf  集群的配置文件,集群启动会自动生成
+  集群的启动： ./redis-trib.rb create --replicas 1 172.31.174.59:6661 172.31.174.59:6662 172.31.174.59:6663 172.31.174.59:6664 172.31.174.59:6665  172.31.174.59:6666
+  (集群启动的过程中需要注意点:阿里云)
+3.客户端连接集群
+
+
+
+
+redis 常用命令
+对于：key:value
+
+set name a  为name设定值
+get name  取出name中的值
+
+
+Map操作
+
+hset name key value     //设置单个 key value
+hmset name key1 value2 key2 value2  //一次设置多个
+hget name key   //获取 key= name 的map 然后从map中获取对应key的value
+hgetall  name   //获取key=name的map中的所有的key:value
+
+
+list操作,底层有链表实现,支持的操作包括lpush,lpop,rpush,rpop,lrange 等,
+lpush name v1 v2   //将v1,v2存入 key=name 的list当中,从左边开始插入
+lrange name 0 10  //将list中的元素遍历出来,范围是0到10
+lpop name    //从左边pop出队列中的一个元素
+
+
+
+//可以拥有获取最新的评论最新的评论
+ltrim 修剪一个已存在的list
+ltrim name 0 10 只保存name 列表中0到10的元素
+
+//一次列表中指定的元素
+lrem key count value
+count = 0  例如：lrem key 0 5  //移除列表中所有=5的元素
+count > 0  例如：lrem key 2 5 //从表头开始查询,移除列表中前2个=5的值
+count < 0  例如：lrem key -2 5 //从表尾开始查询,移除列表中2个=5的值
+
+zrevrange key 0 -1  //降序输出全部数据
+zrank key u1  //输出u1的排序位置
+
+
+
+
+
+Set操作,值不允许重复,底层是一个map,value都为空
+sadd name v1 v2  //向set集合中添加v1,v2
+smembers  name  //遍历出key=name的所有集合元素
+spop name 2  //从集合中随机取出2个value
+sunion name1 name2 //取key=name1和key = name2两个集合的并集
+
+
+
+Redis的消息发布/订阅
+publish channel mes   //在channel上发布消息
+subscribe channel   //订阅channel上的消息
+
+
+问题：WRONGTYPE Operation against a key holding the wrong kind of value： //key=name 相同的key存储了不同的数据类型

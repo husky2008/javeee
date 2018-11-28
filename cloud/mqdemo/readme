@@ -1,0 +1,22 @@
+1.通过JmsTemplate或者JmsMessagingTemplate来实现Producer发送消息
+2.通过注解 @JmsListener(destination = "spring.boot.mq")  来确定消费者要监听的队列
+3.通过@SendTo("spring.boot.mq2") 注解也可以把消息发送到队列中去
+
+
+通过在配置文件中spring.jms.pub-sub-domain=true 来开启发布订阅的模式,默认是点对点的模式。只能启动一个，所以需要在程序中要2中模式共存。
+如果需要2个都用,在使用topic模式的时候指定containerFactory
+@JmsListener(destination = "spring.boot.mq.topic",containerFactory ="topicFactory")
+并且要生成对应的JmsListenerContainerFactory
+ @Bean
+    public JmsListenerContainerFactory<?> topicFactory(ConnectionFactory factory) {
+        DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
+        defaultJmsListenerContainerFactory.setPubSubDomain(true);  //设定为topic模式
+        defaultJmsListenerContainerFactory.setConnectionFactory(factory);
+        return  defaultJmsListenerContainerFactory;
+    }
+
+
+AciveMQ 主从配置
+1.通过数据库（JDBC Master Slave）实现，在mq进程启动时一个主（某一台mq进程）抓取数据库中表的独占锁，
+  另一台mq进程会由于争抢不到表锁而阻塞，这样其它的进程都变成了从。（只允许有一个主，可以有多个从）
+2.通过kahaDB 共享文件的形式实现。 ActiveMQ默认使用的kahaDb作为持久化系统。

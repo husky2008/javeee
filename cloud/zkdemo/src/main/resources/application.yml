@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    url: jdbc:mysql://118.190.88.201:3306/activiti_test?useSSL=true&serverTimezone=GMT
+    username: trm
+    password: Dben@123
+    driver-class-name: com.mysql.jdbc.Driver
+#\u8BBE\u7F6E\u65E5\u671F\u7684\u8FD4\u56DE\u683C\u5F0F
+  jackson:
+    date-format: "yyyy-MM-dd"
+  application:
+        name: Provider                       # 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
+
+
+#\u6307\u5B9A\u9A7C\u5CF0\u547D\u540D\u548C\u5B9E\u4F53\u53D8\u91CF\u4E4B\u95F4\u7684\u8F6C\u6362
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+#spring cloud eurake 服务配置
+server:
+  port: 2100
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true                       # 设置微服务调用地址为IP优先（缺省为false）
+    lease-renewal-interval-in-seconds: 5          # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 15      # 发呆时间，即服务续约到期时间（缺省为90s）
+  client:
+   # healthcheck:
+    #  enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+    service-url:
+      defaultZone: http://127.0.0.1:1100/eureka/ # 指定服务注册中心的地址
+
+
+
+
+
+
+
+
+
