@@ -3,6 +3,7 @@ package com.zk;/**
  */
 
 import com.zk.aspect.AspectService;
+import com.zk.aspect.HelloServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,15 @@ public class AspectDemoTest {
     @Autowired
     private AspectService demoService;
 
+    @Autowired
+    private HelloServiceImpl helloService;
+
     @Test
     public void test(){
-        demoService.say("what");
-        demoService.hello("hello");
+        /*demoService.say("what");
+        */
+        //demoService.hello("hello");
+        demoService.sayw(helloService);
     }
 
 

@@ -10,14 +10,21 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class AspectService implements IService {
+
     @AspectAnnotation
     @Override
-    public  void say(String str){
+    public void say(String str) {
         System.out.println(str);
     }
 
-
-    public  void hello(String str){
+    public void hello(String str) {
         System.out.println(str);
+    }
+
+    public void sayw(HelloServiceImpl helloService) {
+        helloService.abc();
+    }
+
+    public AspectService() {
     }
 }

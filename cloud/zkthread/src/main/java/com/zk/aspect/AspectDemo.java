@@ -28,13 +28,16 @@ public class AspectDemo {
      *  2.3 第二个*代表类   *代表所有类
      *  2.4 *(..) 表示方法  *表示所有的方法名, (..) 表示任意的参数
      *
-     *  execution(* com.zk.aspect..*.say*(..))") 表示say开头的方法
+     *  execution(* com.zk.aspect..*.say*(..)) 表示say开头的方法
      *  execution(* com.zk.aspect..As*.say*(..)) 表示 As开头的类,say开头的方法
      *  execution(* com.zk.aspect.IService.*(..)) IService接口中的方法
      *  execution(* com.zk.aspect.IService+.*(..)) IService接口中的方法及接口实现类中自己的方法
      *  execution(* com.zk.aspect.IService+.*(String,int)) 指定特定的参数类型
+     *
+     *  3 arg()
+     *
      */
-    @Pointcut("execution(* com.zk.aspect.IService+.*(Object+))")
+    @Pointcut("execution(* com.zk.aspect..*.say*(..))")
     public void autoLog(){
     }
 
@@ -52,10 +55,10 @@ public class AspectDemo {
 
     @Around("autoLog()")
     public void around(JoinPoint joinPoint){
-        Object[] args = joinPoint.getArgs();
+       /* Object[] args = joinPoint.getArgs();
         Object target = joinPoint.getTarget();
         System.out.println(target);
-        System.out.println(args[0]);
+        System.out.println(args[0]);*/
         System.out.println("Around");
     }
 
