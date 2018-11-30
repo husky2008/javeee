@@ -16,6 +16,7 @@
         <module>zkdemo</module>
         <module>mqdemo</module>
         <module>redisdemo</module>
+        <module>zkthread</module>
     </modules>
 
 
