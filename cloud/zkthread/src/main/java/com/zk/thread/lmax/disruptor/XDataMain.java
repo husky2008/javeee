@@ -1,6 +1,7 @@
 package com.zk.thread.lmax.disruptor;
 
 import com.lmax.disruptor.*;
+import com.lmax.disruptor.dsl.Disruptor;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -27,6 +28,8 @@ public class XDataMain {
          * 第二个参数是RingBuffer的大小，它必须是2的指数倍 目的是为了将求模运算转为&运算提高效率
          * 第三个参数是RingBuffer的生产都在没有可用区块的时候(可能是消费者（或者说是事件处理器） 太慢了)的等待策略
          */
+
+
         RingBuffer<XData> ringBuffer = RingBuffer.createSingleProducer(new EventFactory<XData>() {
             @Override
             public XData newInstance() {
