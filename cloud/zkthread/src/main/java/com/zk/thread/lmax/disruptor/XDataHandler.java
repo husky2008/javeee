@@ -6,7 +6,7 @@ import com.lmax.disruptor.WorkHandler;
 import java.util.UUID;
 
 /**
- * @ClassName XDataHandler
+ * 消费者,实现EventHandler 接口,在接口中对数据进行处理
  * @Description TODO
  * @Author zhangkai
  * @Date 2018/12/4 18:31
