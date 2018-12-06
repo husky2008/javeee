@@ -15,16 +15,27 @@ public class MapDemo {
     public static void main(String[] args) {
 
         Map<String,String> map = new HashMap<>();
+        map.put("a","1");
 
 
         /**
          * 如果map中不存在对应key的value,将第二个参数的返回值返回作为key的value,
          * MapDemo::get   -->   MapDemo.get(a)  a是第一个参数的值
+         * 如果map中存在对应的key,则不覆盖直接返回对应的值
+         * computeIfAbsent 返回插入的值
          */
 
-        map.computeIfAbsent("a",MapDemo::get);
+        String val =  map.computeIfAbsent("a",MapDemo::get);
 
-        System.out.println(map.get("a"));
+        /**
+         * 如果map中不存在对应的key,value,则放入map中,并返回null
+         * 如果map中存在对应的key,value;不会进行覆盖,直接返回对应的value
+         */
+        String va2 = map.putIfAbsent("a","c");
+
+        System.out.println(val);
+        System.out.println(va2);
+        System.out.println(map);
 
 
     }

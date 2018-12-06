@@ -1,4 +1,4 @@
-package com.zk.jms;/**
+package com.zk.design;/**
  * Created by husky on 2018/11/15.
  */
 
@@ -85,7 +85,6 @@ class  demo6 {
     private static volatile  demo6 sd;
     public static  demo6 getSingletone() {
         if(sd == null){
-            //如果有多个线程进来,会引起线程问题
             synchronized(demo6.class){
                 if(sd == null){
                     sd = new demo6();

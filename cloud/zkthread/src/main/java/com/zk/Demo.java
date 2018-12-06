@@ -14,6 +14,8 @@ import java.util.TreeMap;
 public class Demo {
 
 
+    private long a;
+
     public void say(){
         System.out.println("demo");
     }
@@ -36,10 +38,10 @@ public class Demo {
 
 //            System.out.println(Demo.tryDemo());
 
-        DemoSon demoSon = new DemoSon();
+       /* DemoSon demoSon = new DemoSon();
         demoSon.say();
         Demo demo = (Demo)demoSon;
-        demo.say();
+        demo.say();*/
     }
 }
 
