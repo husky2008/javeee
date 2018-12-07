@@ -42,6 +42,9 @@ public class Demo {
         demoSon.say();
         Demo demo = (Demo)demoSon;
         demo.say();*/
+
+        System.out.println(2|1);
+        System.out.println(129|128);
     }
 }
 

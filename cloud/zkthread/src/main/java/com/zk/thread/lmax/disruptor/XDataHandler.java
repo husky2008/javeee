@@ -20,6 +20,6 @@ public class XDataHandler implements EventHandler<XData>, WorkHandler<XData> {
     @Override
     public void onEvent(XData xData) throws Exception {
           xData.setId(UUID.randomUUID().toString());
-        System.out.println(xData.getId());
+        System.out.println(xData.getPrice());
     }
 }

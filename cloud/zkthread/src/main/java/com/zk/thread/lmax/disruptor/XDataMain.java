@@ -45,18 +45,20 @@ public class XDataMain {
 
         //创建消息处理器
         BatchEventProcessor<XData> xDataBatchEventProcessor = new BatchEventProcessor<>(ringBuffer,sequenceBarrier,new XDataHandler());
+        BatchEventProcessor<XData> xDataBatchEventProcessor2 = new BatchEventProcessor<>(ringBuffer,sequenceBarrier,new XDataHandler());
 
         //这一部的目的是让RingBuffer根据消费者的状态    如果只有一个消费者的情况可以省略
-        ringBuffer.addGatingSequences(xDataBatchEventProcessor.getSequence());
+        ringBuffer.addGatingSequences(xDataBatchEventProcessor.getSequence(),xDataBatchEventProcessor2.getSequence());
 
 
         executorService.submit(xDataBatchEventProcessor);
+        executorService.submit(xDataBatchEventProcessor2);
 
         Future<Void> future = executorService.submit(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
                 long seq;
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < 1; i++) {
                     seq = ringBuffer.next();//占个坑 --ringBuffer一个可用区块
                     ringBuffer.get(seq).setPrice(new BigDecimal("0.12"));//给这个区块放入 数据  如果此处不理解，想想RingBuffer的结构图
                     ringBuffer.publish(seq);//发布这个区块的数据使handler(consumer)可见
