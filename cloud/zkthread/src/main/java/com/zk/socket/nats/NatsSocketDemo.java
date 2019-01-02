@@ -22,7 +22,7 @@ public class NatsSocketDemo {
         InputStream inputStream = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
         StringBuilder sb = new StringBuilder();
-        //new NatsSocketDemo.ReadIn(inputStream,outputStream).start();
+        new NatsSocketDemo.ReadIn(inputStream,outputStream).start();
         new NatsSocketDemo.PingThread(outputStream).start();
         sb.append("SUB").append(" ").append("a.b").append(" ").append("dev").append("\r\n");
         outputStream.write(sb.toString().getBytes());

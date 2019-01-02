@@ -25,6 +25,9 @@ public class DefaultMethodDemo {
 }
 
 
+/**
+ * 如果实现的2个接口有相同的方法,需要在实现类中重写对应的方法,并指定要用那个接口中的默认方法B.super.say();
+ */
 class Demo implements A,B {
 
     @Override

@@ -1,8 +1,5 @@
-package com.zk.queue;
+package com.zk.thread.queue;
 
-import sun.applet.Main;
-
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

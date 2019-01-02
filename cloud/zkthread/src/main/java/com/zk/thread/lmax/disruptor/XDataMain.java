@@ -17,17 +17,17 @@ public class XDataMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        int bufferSize = 1024;
+        /*int bufferSize = 1024;
         int threadSize = 4;
 
 
 
-        /*
+        *//*
          * createSingleProducer创建一个单生产者的RingBuffer，
          * 第一个参数叫EventFactory，从名字上理解就是“事件工厂”，其实它的职责就是产生数据填充RingBuffer的区块。
          * 第二个参数是RingBuffer的大小，它必须是2的指数倍 目的是为了将求模运算转为&运算提高效率
          * 第三个参数是RingBuffer的生产都在没有可用区块的时候(可能是消费者（或者说是事件处理器） 太慢了)的等待策略
-         */
+         *//*
 
 
         RingBuffer<XData> ringBuffer = RingBuffer.createSingleProducer(new EventFactory<XData>() {
@@ -35,7 +35,7 @@ public class XDataMain {
             public XData newInstance() {
                 return new XData();
             }
-        },bufferSize, new YieldingWaitStrategy());
+        }, bufferSize, new YieldingWaitStrategy());
 
         //创建线程池
         ExecutorService executorService = Executors.newFixedThreadPool(threadSize);
@@ -44,11 +44,11 @@ public class XDataMain {
         SequenceBarrier sequenceBarrier = ringBuffer.newBarrier();
 
         //创建消息处理器
-        BatchEventProcessor<XData> xDataBatchEventProcessor = new BatchEventProcessor<>(ringBuffer,sequenceBarrier,new XDataHandler());
-        BatchEventProcessor<XData> xDataBatchEventProcessor2 = new BatchEventProcessor<>(ringBuffer,sequenceBarrier,new XDataHandler());
+        BatchEventProcessor<XData> xDataBatchEventProcessor = new BatchEventProcessor<>(ringBuffer, sequenceBarrier, new XDataHandler());
+        BatchEventProcessor<XData> xDataBatchEventProcessor2 = new BatchEventProcessor<>(ringBuffer, sequenceBarrier, new XDataHandler());
 
         //这一部的目的是让RingBuffer根据消费者的状态    如果只有一个消费者的情况可以省略
-        ringBuffer.addGatingSequences(xDataBatchEventProcessor.getSequence(),xDataBatchEventProcessor2.getSequence());
+        ringBuffer.addGatingSequences(xDataBatchEventProcessor.getSequence(), xDataBatchEventProcessor2.getSequence());
 
 
         executorService.submit(xDataBatchEventProcessor);
@@ -70,9 +70,36 @@ public class XDataMain {
         future.get();
         Thread.sleep(1000);//等上1秒，等消费都处理完成
         xDataBatchEventProcessor.halt();//通知事件(或者说消息)处理器 可以结束了（并不是马上结束!!!）
-        executorService.shutdown();//终止线程
+        executorService.shutdown();//终止线程*/
+
+
+        MyDaemonThreadFactory myDaemonThreadFactory = new MyDaemonThreadFactory("abc");
+
+        Disruptor<XData> disruptor = new Disruptor<XData>(() -> {
+            return new XData();
+        }, 4, myDaemonThreadFactory);
+        disruptor.handleEventsWith(new XDataHandler());
+        disruptor.start();
+
+
 
     }
 
 
+}
+
+class MyDaemonThreadFactory implements ThreadFactory {
+    protected String name;
+
+    public MyDaemonThreadFactory(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r);
+        t.setDaemon(true);
+        t.setName(this.name);
+        return t;
+    }
 }

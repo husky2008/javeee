@@ -15,7 +15,7 @@ public class MapDemo {
     public static void main(String[] args) {
 
         Map<String,String> map = new HashMap<>();
-        map.put("a","1");
+        map.put("b","1");
 
 
         /**
@@ -33,11 +33,13 @@ public class MapDemo {
          */
         String va2 = map.putIfAbsent("a","c");
 
+        {
+            map.put("aaa","1111");
+        }
+
         System.out.println(val);
         System.out.println(va2);
         System.out.println(map);
-
-
     }
 
     public  static  String get(String str){
