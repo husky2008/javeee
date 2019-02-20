@@ -2,10 +2,9 @@ package com.zk;/**
  * Created by husky on 2018/11/16.
  */
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeMap;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.*;
 
 /**
  * @author zhangkai
@@ -43,8 +42,12 @@ public class Demo {
         Demo demo = (Demo)demoSon;
         demo.say();*/
 
-        System.out.println(2|1);
-        System.out.println(129|128);
+        /*System.out.println(2|1);
+        System.out.println(129|128);*/
+        List<String> nodeName = new ArrayList<>();
+        String name = "";
+        String join = StringUtils.join(nodeName, ",");
+        System.out.println(Arrays.asList(name.split(",")));
     }
 }
 
