@@ -1,10 +1,12 @@
 package com.zk.jdk8.stream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -28,7 +30,6 @@ public class StreamDemo {
         list.add(1);
         list.add(2);
         list.add(3);
-
         Stream<Integer> stream = list.stream();
         /**
          * count()： 计算数量
@@ -50,8 +51,34 @@ public class StreamDemo {
         list2.add("def");
         list2.add("dddddd");
         list2.forEach(StreamDemo::abc);
-
         StreamDemo.fuck(StreamDemo::abc);
+
+
+        /**
+         * 流的创建
+         */
+        IntStream stream1 = Arrays.stream(new int[]{1, 2, 3});  //通过 Arrays.stream()创建流
+        Stream<String> stream2 = Stream.of("1", "a","3"); //Stream.of()创建流
+        Stream.generate(() ->new Student()).limit(20); //
+
+
+        /**
+         * 流的操作
+         *  map：转换流，将一种类型的流转换为另外一种流
+         *  filter：过滤流，过滤流中的元素
+         *  flapMap：拆解流，将流中每一个元素拆解成一个流
+         */
+        stream1.map(operand -> operand + 1).forEach(System.out::println);
+        //stream2.map(x -> Integer.parseInt(x)).forEach(System.out::println);
+
+
+        String[] arr1 = {"a", "b", "c", "d"};
+        String[] arr2 = {"e", "f", "c", "d"};
+        String[] arr3 = {"h", "j", "c", "d"};
+        // Stream.of(arr1, arr2, arr3).flatMap(x -> Arrays.stream(x)).forEach(System.out::println);
+        Stream.of(arr1, arr2, arr3).flatMap(Arrays::stream).forEach(System.out::println);
+
+
     }
 
 

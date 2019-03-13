@@ -1,5 +1,6 @@
 package com.zk.thread.threadpool;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.Executors;
 public class fixedthreadPool {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
 
         /**
@@ -22,32 +23,27 @@ public class fixedthreadPool {
          *                                       0L, TimeUnit.MILLISECONDS,
          *                                       new LinkedBlockingQueue<Runnable>())
          */
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        //ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3,r -> {
+           Thread thread =  new Thread(r);
+           thread.setName(String.format("%s-%s-%s",thread.getName(),"abc",thread.getId()));
+           return  thread;
+        });
+
         for(int i=0;i<10;i++){
-            try{
-                Thread.sleep(2000);
-            }catch(Exception e){
-              e.printStackTrace();
-            }
             executorService.submit(()->{
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(Thread.currentThread());
             });
         }
-
-
-
+        System.out.println(111111111);
+        System.out.println(0%200);
+        System.in.read();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

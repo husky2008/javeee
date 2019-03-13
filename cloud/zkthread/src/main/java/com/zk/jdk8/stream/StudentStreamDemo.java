@@ -1,7 +1,6 @@
 package com.zk.jdk8.stream;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -14,21 +13,48 @@ import java.util.stream.Collectors;
 public class StudentStreamDemo {
 
     public static void main(String[] args) {
-
-        List<Student> students = Collections.emptyList();
-        for (int i=0;i<10;i++){
+        List<Student> students = new ArrayList<>();
+        for (int i=0;i<10000000;i++){
            Student student = new Student();
            student.setId(i);
            student.setAge(i+20);
            student.setName("husky"+i);
            students.add(student);
         }
+        /*for (int i = 0; i < 10000000; i++) {
+            Student student = new Student();
+            student.setId(i);
+            student.setAge(i + 20);
+            student.setName("husky" + i);
+            students.add(student);
+        }*/
+
+        long time2 = System.currentTimeMillis();
+        Set<String> keys = new HashSet<>();
+        for(Student student:students){
+          String key = String.format("%s%s", student.getId(), student.getName());
+          keys.add(key);
+        }
+        System.out.println(System.currentTimeMillis() - time2);
+
+
+      /*  long time = System.currentTimeMillis();
+        Set<String> collect = students.stream().map(student -> String.format("%s%s", student.getId(), student.getName())).collect(Collectors.toSet());
+        System.out.println(System.currentTimeMillis() - time);
+        //collect.forEach(System.out::println);
+
+        long time3 = System.currentTimeMillis();
+        Set<String> collect2 = students.parallelStream().map(student -> String.format("%s%s", student.getId(), student.getName())).collect(Collectors.toSet());
+        System.out.println(System.currentTimeMillis() - time3);*/
+
+        //List<Student> collect1 = students.stream().filter(student -> student.getId() > 5).sorted(Comparator.comparing(Student::getId).reversed()).collect(Collectors.toList());
+        //collect1.forEach(System.out::println);
 
 
         //过滤student.age > 5的数据,然后返回对应的的ID集合列表
-        List<Integer> collect = students.parallelStream().filter(student -> student.getAge() > 5).map(student -> student.getId()).collect(Collectors.toList());
+        //List<Integer> collect = students.parallelStream().filter(student -> student.getAge() > 5).map(student -> student.getId()).collect(Collectors.toList());
 
-        System.out.println(collect);
+       // System.out.println(collect);
 
     }
 
