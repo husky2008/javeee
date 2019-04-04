@@ -1,0 +1,17 @@
+1.if条件判断
+
+<#if (age>60)>老年人
+<#elseif (age>40)>中年人
+<#elseif (age>20)>青年人
+<#else> 少年人
+</#if>
+
+2.list循环
+<#list productList as p>
+
+${p.id}--${p.name}
+
+</#list>
+
+3.取值
+${obj.propertity}

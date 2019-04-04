@@ -3,6 +3,7 @@ package com.zk;/**
  */
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,6 +17,8 @@ public class Demo {
 
     private long a;
 
+
+    @Scheduled
     public void say() {
         System.out.println("demo");
     }
@@ -66,7 +69,8 @@ public class Demo {
         } else {
             // ret.put("versionValid", false);
         }*/
-        String[] a = new String[]{"2", "b"};
+
+       /* String[] a = new String[]{"2", "b"};
         List<Map<String, Double>> abc = new ArrayList<>();
         Map<String, Double> m1 = new HashMap<>();
         m1.put("a", 3d);
@@ -92,8 +96,11 @@ public class Demo {
             return 0;
         })).collect(Collectors.toList());
 
-        System.out.println(collect);
+        System.out.println(collect);*/
 
+        Map<String,String> map = new HashMap<>();
+        map.put(null,"abc");
+        map.remove(null);
     }
 }
 

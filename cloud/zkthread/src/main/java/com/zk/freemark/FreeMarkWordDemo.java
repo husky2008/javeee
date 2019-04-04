@@ -1,5 +1,8 @@
 package com.zk.freemark;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.zk.dom4j.StringDemo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -35,7 +38,7 @@ public class FreeMarkWordDemo {
         FreeMarkWordDemo test = new FreeMarkWordDemo();
         try {
             String ftl = StringDemo.createFtl();
-            test.createWord("word.ftl");
+            test.createWord("cluster.ftl");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,11 +75,40 @@ public class FreeMarkWordDemo {
     }
 
     private void getData(Map<String, Object> dataMap) {
-        dataMap.put("title", "标题");
-        dataMap.put("name", "张凯");
-        dataMap.put("age", "3");
-        dataMap.put("sex", "男");
-        dataMap.put("abc","FF0000");
+
+       /* Map<String,Object> user = new HashMap<>();
+        user.put("description", "描述");
+        user.put("name", "user011");
+        user.put("previous", "23881");
+        user.put("current", "23331");
+        user.put("abc","FF0000");*/
+        String color = "00B050";   //FF0000
+
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < 5; i++) {
+            JSONObject user = new JSONObject();
+            user.put("description", "描述j");
+            user.put("name", "user011j");
+            user.put("previous", "23881j");
+            user.put("current", "23331j");
+            user.put("abc","FF0000j");
+            if(i/2 == 0){
+                color = "FF0000";
+            }else{
+                color="00B050";
+            }
+            user.put("color",color);
+            user.put("value",i);
+            array.add(user);
+        }
+        dataMap.put("userlist",array);
+
+        JSONObject report = new JSONObject();
+        report.put("time",-1);
+        dataMap.put("report",report);
+
+
+
 
 
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -86,13 +118,5 @@ public class FreeMarkWordDemo {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", "husky" + i);
-            map.put("age", i);
-            map.put("sex", i % 2 == 0 ? "男" : "女");
-            list.add(map);
-        }
-        dataMap.put("list", list);
     }
 }
