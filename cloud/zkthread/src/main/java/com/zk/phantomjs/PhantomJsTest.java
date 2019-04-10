@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 通过PhantomJs 调用前端界面,将生产的图片保存到本地
  * html:能通过浏览器打开,才能加载
+ *
  * @ClassName PhantomJsTest
  * @Description TODO
  * @Author zhangkai
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class PhantomJsTest {
 
 
-   public static String surfData = "[\n" +
+    public static String surfData = "[\n" +
             "  {\"dataTime\":1524758400000,\"dpt\":\"99999\",\"pre24h\":\"999\",\"prs\":\"99999\",\"rhu\":\"0\",\"station\":\"Y1248\",\"sunlight\":\"99999\",\"tem\":\"227\",\"temMax\":\"99999\",\"temMin\":\"99999\",\"vis\":\"99999\",\"windDAvg10mi\":\"53\",\"windSAvg10mi\":\"99999\"},\n" +
             "  {\"dataTime\":1524844800000,\"dpt\":\"99999\",\"pre24h\":\"399\",\"prs\":\"99999\",\"rhu\":\"0\",\"station\":\"Y1248\",\"sunlight\":\"99999\",\"tem\":\"197\",\"temMax\":\"99999\",\"temMin\":\"99999\",\"vis\":\"99999\",\"windDAvg10mi\":\"66\",\"windSAvg10mi\":\"99999\"},\n" +
             "  {\"dataTime\":1524931200000,\"dpt\":\"99999\",\"pre24h\":\"99999\",\"prs\":\"299\",\"rhu\":\"0\",\"station\":\"Y1248\",\"sunlight\":\"99999\",\"tem\":\"207\",\"temMax\":\"99999\",\"temMin\":\"99999\",\"vis\":\"99999\",\"windDAvg10mi\":\"62\",\"windSAvg10mi\":\"99999\"},\n" +
@@ -35,23 +36,27 @@ public class PhantomJsTest {
 
     public static void main(String[] args) {
 
+        Process exec = null;
         try {
-             PhantomJsTest.createImg();
-
+            //PhantomJsTest.createImg();
+            String filename = System.currentTimeMillis() + ".png";
             //通过执行命令,生成pdf截图
-            /*String shell = "D:\\soft\\phantomjs-2.1.1\\bin\\phantomjs.exe  D:\\soft\\phantomjs-2.1.1\\examples\\rasterize.js https://www.baidu.com/ d:/baidu.pdf";
+            String shell = "D:\\soft\\phantomjs-2.1.1\\bin\\phantomjs.exe  C:\\Users\\paratera\\Desktop\\phantomjs\\rasterize.js http://172.18.4.169:3002/#/operation/monthReport?cid=slurmcluster&start=1551369600000&end=1554047999999 d:/" + filename;
             Runtime runtime = Runtime.getRuntime();
-            Process exec = runtime.exec(shell);
-            System.out.println(exec.waitFor());*/
-
+            exec = runtime.exec(shell);
+            if (exec.waitFor() == 0) {
+                PdfUtils.Pdf("d:/" + filename, "d:/" + System.currentTimeMillis() + ".pdf");
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (exec != null) {
+                exec.destroy();
+            }
         }
 
 
     }
-
-
 
 
     public static List<String> createImg() throws Exception {
