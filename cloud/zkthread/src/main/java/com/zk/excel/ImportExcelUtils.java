@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * Excel 文件导入,支持xls,xlsx
  * Created by zhangkai
  */
-public class ImportExcelUtils {
+public class ImportExcelUtils<T> {
 
     static boolean bCut = true;
     static String DATE_F = "yyyy-MM-dd";
@@ -38,10 +38,10 @@ public class ImportExcelUtils {
      * @return 对象列表
      * @throws Exception
      */
-    public static List<Object> importExcle(Class objClass, Workbook workbook, int beginRowIndex, Map<Object, StringBuilder> errorMap) throws Exception {
+    public static <T> List<T> importExcle(Class<T> objClass, Workbook workbook, int beginRowIndex, Map<Object, StringBuilder> errorMap) throws Exception {
         String msg = "导入成功";
         if (errorMap == null) errorMap = new HashMap<>();
-        List<Object> list = new ArrayList<Object>();
+        List<T> list = new ArrayList<>();
         try {
             //获取对象的属性值
             Field[] fields = objClass.getDeclaredFields();
@@ -62,7 +62,7 @@ public class ImportExcelUtils {
                         continue;
                     }
                     //生成实例
-                    Object instance = objClass.newInstance();
+                    T instance = objClass.newInstance();
                     StringBuilder sb = new StringBuilder();
                     for (int cellNum = 0; cellNum < fields.length; cellNum++) {
                         //如果需要解析的数据包含对应的标题,将数据解析出来
