@@ -8,10 +8,12 @@ import com.alibaba.fastjson.JSONObject;
 import sun.misc.BASE64Decoder;
 
 /**
- * @ClassName APP
- * @Description TODO
- * @Author paratera
- * @Date 2019/7/2 14:20
+ *腾讯语音ai合成
+ * 问题点
+ * 1.腾讯语音限定每次请求大小不能超过150个字节(50个中文汉字)
+ *  我们多次请求，然后将请求返回的base64连接到一起合成最后的语音
+ *
+ *
  **/
 public class APP {
 
