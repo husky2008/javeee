@@ -33,7 +33,14 @@
 		</developer>
 	</developers>  
 	
-	<dependencies> </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.28</version>
+		</dependency>
+
+	</dependencies>
 	 <build>
         <plugins>
         </plugins>
