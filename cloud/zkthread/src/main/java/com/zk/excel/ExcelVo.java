@@ -1,5 +1,10 @@
 package com.zk.excel;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @ClassName ExcelVo
  * @Description TODO
@@ -59,4 +64,28 @@ public class ExcelVo {
                 ", accountBank='" + accountBank + '\'' +
                 '}';
     }
+
+    public static void main(String[] args) {
+        BigDecimal duration = new BigDecimal("2.00");
+        long time = duration.multiply(new BigDecimal("3600000")).longValueExact();
+        System.out.println(time);
+        System.out.println(Arrays.asList("/sdfdsdfcdfg/abc/".split("/")));
+        List<String> abc = new ArrayList<>();
+        abc.add("c");
+        abc.add("d");
+        abc.add("f");
+        abc.add("c");
+
+
+        System.out.println(String.join(",", abc));
+        String str = "abc";
+        for (int i = 0; i < 10; i++) {
+            String b = str.replaceAll("b", "1");
+            System.out.println(b);
+        }
+        System.out.println(str);
+
+    }
+
+
 }

@@ -39,14 +39,20 @@ public class PhantomJsTest {
         Process exec = null;
         try {
             //PhantomJsTest.createImg();
+            Long start = System.currentTimeMillis();
             String filename = System.currentTimeMillis() + ".png";
-            //通过执行命令,生成pdf截图
-            String shell = "D:\\soft\\phantomjs-2.1.1\\bin\\phantomjs.exe  C:\\Users\\paratera\\Desktop\\phantomjs\\rasterize.js http://172.18.4.169:3002/#/operation/monthReport?cid=slurmcluster&start=1551369600000&end=1554047999999 d:/" + filename;
+            //通过执行命令,生成pdf
+            String bin = PhantomJsTest.class.getClassLoader().getResource("phantomjs/phantomjs.exe").getPath();
+            if (bin.startsWith("/")) bin = bin.substring(1, bin.length());
+            String js = PhantomJsTest.class.getClassLoader().getResource("phantomjs/rasterize.js").getPath();
+            if (js.startsWith("/")) js = js.substring(1, js.length());
+            String shell = bin + " " + js + " http://172.18.4.169:3002/#/operation/monthReport?cid=slurmcluster&start=1551369600000&end=1554047999999 d:/" + filename;
             Runtime runtime = Runtime.getRuntime();
             exec = runtime.exec(shell);
             if (exec.waitFor() == 0) {
                 PdfUtils.Pdf("d:/" + filename, "d:/" + System.currentTimeMillis() + ".pdf");
             }
+            System.out.println("cost time = " + (System.currentTimeMillis() - start));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

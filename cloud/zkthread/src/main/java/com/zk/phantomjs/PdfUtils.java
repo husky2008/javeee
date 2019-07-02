@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 public class PdfUtils {
     public static File Pdf(String filePath, String mOutputPdfFileName) throws Exception {
         Image png = Image.getInstance(filePath); //通过文件路径获取image
-        Document doc = new Document(null, 20, 20, 20, 20); //new一个pdf文档
+        Document doc = new Document(null, 0, 0, 0, 0); //new一个pdf文档
         doc.setPageSize(new Rectangle(png.getWidth(), png.getHeight()));
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(mOutputPdfFileName)); //pdf写入

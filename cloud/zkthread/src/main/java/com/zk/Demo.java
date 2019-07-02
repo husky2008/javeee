@@ -2,11 +2,11 @@ package com.zk;/**
  * Created by husky on 2018/11/16.
  */
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author zhangkai
@@ -98,14 +98,94 @@ public class Demo {
 
         System.out.println(collect);*/
 
-        Map<String,String> map = new HashMap<>();
+       /* Map<String,String> map = new HashMap<>();
         map.put(null,"abc");
-        map.remove(null);
+        map.remove(null);*/
+
+
+        /*String path = Demo.class.getClassLoader().getResource("phantomjs/phantomjs.exe").getPath();
+        System.out.println(path);*/
+
+     /*   String abc = "guangzhou,whtest02";
+        System.out.println(abc.substring(abc.indexOf(",") + 1));
+        ConcurrentHashMap<String, Long> JOBS_COMPLETE_TIME_CACHE = new ConcurrentHashMap<>();
+        JOBS_COMPLETE_TIME_CACHE.put("a",1l);
+        System.out.println(JOBS_COMPLETE_TIME_CACHE.contains("a"));
+        System.out.println(JOBS_COMPLETE_TIME_CACHE.keySet().contains("a"));
+        Map<String,String> map = new HashedMap();*/
+
+
+       /*List<DemoSon> abc = new ArrayList<>();
+       abc.add(new DemoSon(1l,"abc"));
+       abc.add(new DemoSon(2l,"def"));*/
+
+       /*Map<Long,DemoSon> map = new HashedMap();
+       map.put(1l,abc.get(0));
+       map.put(2l,abc.get(1));
+
+
+
+       abc.forEach(demoSon -> {
+           map.get(demoSon.getId()).setName("husky");
+       });
+
+
+        System.out.println(abc);*/
+
+
+        List<String> abc = new ArrayList<>();
+        abc.add("1");
+        abc.add("2");
+
+        for (String s : abc) {
+            if("1".equals(s)){
+                abc.remove(s);
+            }
+        }
+
+        System.out.println(abc);
+
+
+
     }
 }
 
 
 class DemoSon extends Demo {
+
+    private  Long id;
+    private String name;
+
+
+    @Override
+    public String toString() {
+        return "DemoSon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public DemoSon(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public void say() {
         System.out.println("demo son");
