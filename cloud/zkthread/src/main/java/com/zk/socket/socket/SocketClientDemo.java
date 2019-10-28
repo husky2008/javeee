@@ -2,6 +2,7 @@ package com.zk.socket.socket;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
@@ -16,12 +17,17 @@ public class SocketClientDemo {
     public static void main(String[] args) throws  Exception{
 
 
-        Socket socket = new Socket("localhost",8888);
+        Socket socket = new Socket();
+        InetSocketAddress inetSocketAddress = new InetSocketAddress("localhost",8888);
+        socket.connect(inetSocketAddress);
         InputStream inputStream = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
         String msg = "hello";
-        Thread.sleep(10000);
+        //Thread.sleep(10000);
         outputStream.write(msg.getBytes());
+
+
+        inputStream.read();
         outputStream.flush();
         outputStream.close();
         inputStream.close();

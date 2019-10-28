@@ -2,9 +2,12 @@ package com.zk;/**
  * Created by husky on 2018/11/16.
  */
 
+import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.TransactionDefinition;
 
+import java.nio.channels.SelectionKey;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -132,18 +135,92 @@ public class Demo {
 
         System.out.println(abc);*/
 
-
-        List<String> abc = new ArrayList<>();
-        abc.add("1");
-        abc.add("2");
-
-        for (String s : abc) {
-            if("1".equals(s)){
-                abc.remove(s);
-            }
+        List<Double> alarmData = new ArrayList<>();
+        for (int i = 0; i < 240; i++) {
+            alarmData.add(Double.valueOf(5));
         }
 
-        System.out.println(abc);
+
+        DoubleSummaryStatistics stats = alarmData.stream().filter(aDouble -> aDouble != null).mapToDouble(x -> x).summaryStatistics();
+        double max = stats.getMax();
+        double min = stats.getMin();
+        double avg = stats.getAverage();
+
+        System.out.println(max);
+        System.out.println(min);
+        System.out.println(avg);
+
+
+        /**
+         * a -b < 0 于a<b 的不同点
+         * a,b数值溢出会造成结果错误
+         */
+        int a = Integer.MAX_VALUE;
+        System.out.println(a);
+        a += 20;
+        System.out.println(a);
+        String str1 = "abc";
+        String s = str1.intern();
+        System.out.println(s == str1);
+
+        System.out.println(SelectionKey.OP_ACCEPT);
+
+
+        HashMap<Object, Object> hashMap = new HashMap<>(1);
+        hashMap.put("1", "2");
+
+        TransactionDefinition
+
+      /*  int size = alarmData.size();
+        int bashSize = 10;
+        if (size > 10) {
+            int f = size % 10 == 0 ? size / 10 : size / 10 + 1;
+            for (int i = 0; i < f; i++) {
+                int toIndex = (i + 1) * bashSize;
+                if (toIndex > size) {
+                    toIndex = size;
+                }
+                List<Object> subList =  alarmData.subList(i * bashSize, toIndex);
+                System.out.println(new JSONArray(subList));
+            }
+        } else {
+            System.out.println(alarmData);
+        }*/
+
+
+
+        Node A = new Node("A");
+        Node B = new Node("B");
+        Node C = new Node("C");
+        Node D = new Node("D");
+        Node E = new Node("E");
+        Node F = new Node("F");
+        A.node = B;
+        B.node = C;
+        C.node = D;
+        D.node = E;
+        E.node = F;
+
+
+
+        //指向空，可以想象成位于第一个节点之前
+        Node newNode = null;
+        //指向第一个节点
+        Node curNode = A;
+
+        //循环中，使用第三变量事先保存curNode的后面一个节点
+
+        while (curNode != null){
+            Node tempNode = curNode.getNode();
+            //把curNode反向往前指
+            curNode.setNode(newNode);
+            //newNode向后移动
+            newNode = curNode;
+            //curNode 向后移动
+            curNode = tempNode;
+        }
+
+        System.out.println(newNode);
 
 
 
@@ -151,9 +228,42 @@ public class Demo {
 }
 
 
+class Node {
+    public String value;
+    public Node node;
+    public Node(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "value='" + value + '\'' +
+                ", node=" + node +
+                '}';
+    }
+}
+
+
 class DemoSon extends Demo {
 
-    private  Long id;
+    private Long id;
     private String name;
 
 

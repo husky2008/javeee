@@ -195,6 +195,18 @@
             <version>1.9.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.nats</groupId>
+            <artifactId>jnats</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
 
         <!--<dependency>
             <groupId>org.apache.poi</groupId>
@@ -230,7 +242,7 @@
                     <archive>
                         <manifest>
                             <!-- 主函数的入口 -->
-                            <mainClass>com.zk.freemark.FreeMarkWordDemo</mainClass>
+                            <mainClass>com.zk.nats.NatsGpuClient</mainClass>
                             <!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
                             <useUniqueVersions>false</useUniqueVersions>
                             <addClasspath>true</addClasspath>
@@ -243,6 +255,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>NatsGpu</finalName>
     </build>
 
 
