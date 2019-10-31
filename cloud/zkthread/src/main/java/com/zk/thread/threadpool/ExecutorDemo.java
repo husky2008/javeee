@@ -43,7 +43,7 @@ public class ExecutorDemo {
          * threadFactory: 默认工厂 DefaultThreadFactory ,通过线程工厂可以对线程的一些属性进行定制。
          * RejectedExecutionHandler:当线程池中的资源已经全部使用，添加新线程被拒绝时，会调用RejectedExecutionHandler的rejectedExecution方法
          */
-         /*threadPoolExecutor = new ThreadPoolExecutor(1, 3, 1,
+         threadPoolExecutor = new ThreadPoolExecutor(1, 3, 1,
                 TimeUnit.MINUTES, new ArrayBlockingQueue<>(3), (runnable) -> {
             Thread t = new Thread(runnable);
             return t;
@@ -54,7 +54,7 @@ public class ExecutorDemo {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });*/
+        });
 
 
         /**

@@ -20,10 +20,11 @@ public class SocketServerDemo {
 
 
         ServerSocket serverSocket = new ServerSocket(8888);
+        //serverSocket.setSoTimeout(1000*60*60);
         Socket socket = serverSocket.accept();  //阻塞监听等待服务器端的请求过来
         InputStream inputStream = socket.getInputStream();
 
-        System.out.println(parseInput(inputStream));
+        System.out.println(parseInput(inputStream)+"------------");
 
         inputStream.close();
         socket.close();

@@ -25,7 +25,7 @@ public class APP {
 
         String appId = "2117874440";
         String appKey = "bpothic8lEyA66Bo";
-        String baseFile = "C:\\Users\\paratera\\Desktop";
+        String baseFile = "C:\\Users\\p\\Desktop";
         String fileName = "自媒体";
         String inputFilePath = String.format("%s\\%s\\%s.%s", baseFile, fileName, fileName, "txt");
         String outputFilePath = String.format("%s\\%s\\%s.%s", baseFile, fileName, fileName, "mp3");
